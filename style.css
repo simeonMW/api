@@ -1,0 +1,36 @@
+
+#productImage{
+    height: 400px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Create responsive rows */
+    gap: 10px; 
+}
+img {
+    width: 150px;
+    height: 150px;
+}
+#imgContainer{
+    width: 170px;
+    align-content: center;
+    padding-left: 20px;
+    
+}
+.price{
+    font-weight: lighter;
+}
+.buttons{
+    display: grid;
+    grid-template-rows: 30px;
+    grid-template-columns: repeat(6, 120px);
+    gap: 5px;
+}
+h3{
+    margin:0%;
+    padding-top: 5px;
+}
+img:hover{
+    cursor: pointer;
+}
+#imgContainer:hover{
+    background-color: rgb(187, 200, 211);
+}
