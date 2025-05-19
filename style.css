@@ -125,7 +125,3 @@ img:hover{
     grid-area: viewMore;
 }
 
-/*do this in api.js assigned to categories.onClick*/
-.catButton{
-    display: none;
-}
