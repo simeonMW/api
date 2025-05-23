@@ -4,8 +4,20 @@ let allProductsData = []; // Store all fetched products
         const productImage = document.getElementById('productImage');
         productImage.innerHTML = ''; // Clear current products
 
-        productsToDisplay.forEach(product => {
-            productImage.innerHTML += `<div id="imgContainer">
+        if (productsToDisplay.length === 0) {
+            const noProductsMessage = document.createElement('div');
+            noProductsMessage.style.textAlign = 'center';
+            noProductsMessage.style.width = '100%';
+            noProductsMessage.style.marginTop = '20px';
+            noProductsMessage.innerHTML = '<p>No products found matching your filter.</p>';
+            productImage.appendChild(noProductsMessage);
+            return;
+        }
+
+        productsToDisplay.forEach((product, index) => {
+            // Create a temporary div to parse the HTML string
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = `<div id="imgContainer">
                 <img src=${product.image} alt=${product.description} id="pImage">
                 <h3>${product.title}</h3>
                 <h3 class="price">$${product.price.toFixed(2)}</h3>
@@ -13,6 +25,15 @@ let allProductsData = []; // Store all fetched products
                 <button id="toCart">Add to cart</button>
                 <button id="viewDets">View details</button>
             </div>`;
+
+            const productElement = tempDiv.firstElementChild; // Get the actual div element
+
+            // Add the animation class
+            // Use a slight delay based on index for a staggered effect
+            productElement.style.animationDelay = `${index * 0.05}s`;
+            productElement.classList.add('animated-product');
+
+            productImage.appendChild(productElement); // Append the actual element
         });
     }
 
@@ -31,19 +52,18 @@ let allProductsData = []; // Store all fetched products
                 filterContainer.classList.toggle('active');
             });
 
-            // Handle filter selection
+            // Handle price filter selection
             filterDropdown.querySelectorAll('button').forEach(button => {
                 button.addEventListener('click', (event) => {
-                    const category = event.target.dataset.category;
-                    let filteredProducts = [];
+                    const minPrice = parseFloat(event.target.dataset.filterMin);
+                    const maxPrice = parseFloat(event.target.dataset.filterMax);
 
-                    if (category === 'all') {
-                        filteredProducts = allProductsData;
-                    } else {
-                        filteredProducts = allProductsData.filter(product => product.category === category);
-                    }
+                    const filteredProducts = allProductsData.filter(product =>
+                        product.price >= minPrice && product.price <= maxPrice
+                    );
+
                     displayProducts(filteredProducts);
-                    filterContainer.classList.remove('active'); // Hide dropdown after selection
+                    filterContainer.classList.remove('active');
                 });
             });
 

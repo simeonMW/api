@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-       <header class="banner">
+      <header class="banner">
         <img src="buck worth.png" alt="logo">
     </header>
     <section class="buttons">
@@ -17,16 +17,18 @@
                 Filter <img src="Sort.svg" alt="">
             </button>
             <div class="filter-dropdown" id="filterDropdown">
-                <button data-category="all">All Products</button>
-                <button data-category="men's clothing">Men's Clothing</button>
-                <button data-category="jewelery">Jewelery</button>
-                <button data-category="electronics">Electronics</button>
-                <button data-category="women's clothing">Women's Clothing</button>
+                <h4>Price Range</h4>
+                <button data-filter-min="0" data-filter-max="Infinity">All Prices</button>
+                <button data-filter-min="0" data-filter-max="25">$0 - $25</button>
+                <button data-filter-min="25.01" data-filter-max="50">$25.01 - $50</button>
+                <button data-filter-min="50.01" data-filter-max="100">$50.01 - $100</button>
+                <button data-filter-min="100.01" data-filter-max="200">$100.01 - $200</button>
+                <button data-filter-min="200.01" data-filter-max="Infinity">Over $200</button>
             </div>
         </div>
     </section>
 
-    <p id="productImage"></p>
+    <div id="productImage"></div>
 </body>
 <script src="api.js"></script>
 </html>
