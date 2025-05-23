@@ -32,20 +32,26 @@
     background-color: black;
     border-radius: 0.5rem;
     height: 40px;
-    width: 120px;
+    /* --- Adjusted properties for better fit --- */
+    padding: 0 15px; /* Add horizontal padding */
+    font-size: 1rem; /* Explicit font size, often 16px */
+    white-space: nowrap; /* Prevent text from wrapping */
+    /* Removed fixed width to allow content to dictate size */
+    /* --- End of adjustment --- */
     color: white;
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: normal;
-    font-size: larger;
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 5px; /* Space between text and icon */
     cursor: pointer;
 }
 
 .filter-button img{
-    height: 30px;
-    width: 40px;
+    height: 20px; /* Slightly smaller icon */
+    width: 20px;
+    flex-shrink: 0; /* Prevent icon from shrinking on smaller screens */
 }
 
 .filter-dropdown {
@@ -56,10 +62,10 @@
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
     border-radius: 0.5rem;
-    top: 45px; /* Position below the button */
+    top: 45px;
     left: 0;
-    max-height: 200px; /* Limit height for scrollability */
-    overflow-y: auto; /* Add scrollbar if content exceeds height */
+    max-height: 200px;
+    overflow-y: auto;
 }
 
 .filter-dropdown h4 {
@@ -121,12 +127,10 @@ img {
         "price favcon"
         "addCart viewMore";
     gap: 5px;
-    /* Initial state for animation */
     opacity: 0;
-    transform: translateY(20px); /* Start slightly below */
+    transform: translateY(20px);
 }
 
-/* Keyframes for fade-in animation */
 @keyframes fadeInSlideUp {
     from {
         opacity: 0;
@@ -138,9 +142,8 @@ img {
     }
 }
 
-/* Class to trigger animation */
 .animated-product {
-    animation: fadeInSlideUp 0.5s ease-out forwards; /* 0.5s duration, ease-out timing */
+    animation: fadeInSlideUp 0.5s ease-out forwards;
 }
 
 #imgContainer:hover{
@@ -150,10 +153,10 @@ img {
     grid-area: image;
 }
 #imgContainer h3{
-    white-space: nowrap; /* Prevent text from wrapping */
-    overflow: hidden; /* Hide overflowing text */
-    text-overflow: ellipsis; /* Add ellipsis (...) for overflow */
-    margin: 0; /* Remove default margin */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
     padding: 5px 0;
     grid-area: name;
 }
