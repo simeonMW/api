@@ -6,11 +6,38 @@
     height: 60px;
     padding: 10px 10px 10px 10px;
 }
+.logo{
+    grid-area: logo;
+}
 .banner{
     display: grid;
     justify-content:center;
     margin-bottom: 20px;
     box-shadow: 2px 2px 10px rgb(66, 64, 64);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas: "menu logo cart";
+}
+.cart{
+   grid-area: cart;
+   justify-self: center;
+}
+.marker{
+    background-color: black;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    grid-area: cart;
+    justify-self: center;
+    margin-top: 20px;
+    margin-left: 29px;
+    display: grid;
+    justify-content: center;
+}
+#markerNum{
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: small;
 }
 .category{
     background-color: black;
@@ -108,7 +135,7 @@ h3{
 img:hover{
     cursor: pointer;
 }
-#toCart{
+.toCart{
     background-color: black;
     border-radius: 0.5rem;
     color: white;
@@ -123,5 +150,77 @@ img:hover{
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: normal;
     grid-area: viewMore;
+}
+.checkoutBody{
+    display: grid;
+    grid-template-rows: auto;
+}
+.checkoutContainer{
+    height: 100px;
+    width: 1470px;
+    margin-left: 10px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas: "photo itemName price";
+    box-shadow: 2px 2px 10px grey;
+    border-radius: 0.5rem;
+    margin-bottom: 20px; /* Add this for spacing between rows */
+}
+.checkoutContainer:hover{
+    box-shadow: 2px 2px 10px green;
+}
+.checkoutImage{
+    grid-area: photo;
+    height: 80px;
+    width: 80px;
+    padding-left: 50px;
+    padding-top: 10px;
+}
+.checkoutTitle{
+    grid-area: itemName;
+    padding-top: 30px;
+    
+}
+.checkoutPrice{
+    grid-area: price;
+    justify-self: center;
+    padding-top: 30px;
+    color:#009245;
+}
+.itemDelete{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    grid-area: price;
+    justify-self: end;
+    margin-right: 10px;
+    margin-top: 5px;
+}
+.itemDelete:hover{
+    background-color: green;
+}
+.itemDelete h3{
+    color: white;
+    margin: 0%;
+    padding: 0%;
+    font-weight: lighter;
+    cursor: pointer; 
+}
+.checkoutTotal{
+    display: grid;
+    padding-left: 10px;
+    width: 1470px;
+    grid-template-columns: repeat(2,1fr);
+}
+.total{
+    margin-left: 60px;
+}
+.figures{
+    justify-self: end;
+    margin-right: 200px;
+    color: #009245;
 }
 
