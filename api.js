@@ -1,14 +1,11 @@
+
 fetch('https://fakestoreapi.com/products')
   .then(response => response.json())
   .then( data => {
-    console.log(data);
+
 
     const productImage = document.getElementById('productImage');  
     const allProducts = document.getElementById('all');
-    const mens = document.getElementById('mens');
-    const jewels = document.getElementById('jewels');
-    const gadgets = document.getElementById('gadgets');
-    const womens = document.getElementById('womens');
 
     
     data.forEach( product => {
@@ -22,8 +19,7 @@ fetch('https://fakestoreapi.com/products')
         </div>`;
 
     })
-
-   
     
  })
   
+
