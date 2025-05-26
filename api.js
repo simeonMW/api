@@ -5,8 +5,6 @@ fetch('https://fakestoreapi.com/products')
     console.log(data);
 
     const productImage = document.getElementById('productImage');  
-    const allProducts = document.getElementById('all');
-
     
     data.forEach( product => {
         productImage.innerHTML += `<div id="imgContainer">
@@ -20,7 +18,6 @@ fetch('https://fakestoreapi.com/products')
     });
   
     const checkout = document.querySelector('.cart');
-    const marker_num = document.querySelector('.marker'); 
       let counter = 0;
 
     //new database for checkout section
@@ -92,13 +89,4 @@ fetch('https://fakestoreapi.com/products')
         });
     });
  })
-
-
-
-
-
-    })
-    
-
-  
 
