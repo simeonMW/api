@@ -1,35 +1,54 @@
-*{
-    margin:0%;
+* {
+    margin: 0;
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
 }
-.banner img{
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Keyframes for the product appearance animation */
+@keyframes fadeInSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px); /* Start 20px below its final position */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0); /* End at its natural position */
+    }
+}
+
+.banner img {
     width: 300px;
     height: 60px;
-    padding: 10px 10px 10px 10px;
+    padding: 10px;
 }
-.banner{
+.banner {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-areas: "menu logo cart";
-    justify-content:center;
+    justify-content: center;
     margin-bottom: 20px;
     box-shadow: 2px 2px 10px rgb(66, 64, 64);
 }
-.cart{
+.cart {
     grid-area: cart;
     justify-self: center;
 }
-.logo{
+.logo {
     grid-area: logo;
 }
-.category{
+.category {
     background-color: black;
     margin-left: 10px;
     border-radius: 0.5rem;
     height: 40px;
     color: white;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: normal;
     font-size: larger;
+    border: none;
+    cursor: pointer;
 }
 .filter-container {
     position: relative;
@@ -41,26 +60,24 @@
     background-color: black;
     border-radius: 0.5rem;
     height: 40px;
-    /* --- Adjusted properties for better fit --- */
-    padding: 0 15px; /* Add horizontal padding */
-    font-size: 1rem; /* Explicit font size, often 16px */
-    white-space: nowrap; /* Prevent text from wrapping */
-    /* Removed fixed width to allow content to dictate size */
-    /* --- End of adjustment --- */
+    padding: 0 15px;
+    font-size: 1rem;
+    white-space: nowrap;
     color: white;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: normal;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 5px; /* Space between text and icon */
+    gap: 5px;
     cursor: pointer;
+    border: none;
 }
 
-.filter-button img{
-    height: 20px; /* Slightly smaller icon */
+.filter-button img {
+    height: 20px;
     width: 20px;
-    flex-shrink: 0; /* Prevent icon from shrinking on smaller screens */
+    flex-shrink: 0;
 }
 
 .filter-dropdown {
@@ -73,6 +90,16 @@
     border-radius: 0.5rem;
     top: 45px;
     left: 0;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.filter-dropdown h4 {
+    padding: 8px 16px 4px;
+    margin: 0;
+    color: #555;
+    font-size: 0.9em;
+    border-bottom: 1px solid #eee;
 }
 
 .filter-dropdown button {
@@ -84,7 +111,7 @@
     border: none;
     width: 100%;
     text-align: left;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: large;
     cursor: pointer;
 }
@@ -98,42 +125,54 @@
     display: block;
 }
 
-
-#productImage{
-    height: 400px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Create responsive rows */
-    gap: 10px;
-    row-gap: 30px;
+#productImage {
+    /* Changed from grid to flexbox for left alignment and close packing */
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap to the next line */
+    gap: 10px; /* Space between product containers */
     margin-top: 50px;
+    padding: 0 10px; /* Add some padding to the container itself */
+    height: auto; /* Allow height to adjust based on content */
+    justify-content: flex-start; /* Align items to the start (left) */
+    align-items: flex-start; /* Align items to the top */
 }
+
 img {
     width: 150px;
     height: 150px;
+    display: block; /* Ensures no extra space below the image */
+    margin: 0 auto; /* Center image within its container */
 }
-#imgContainer{
-    width: 170px;
-    align-content: center;
+#imgContainer {
+    width: 190px; /* Increased width slightly to accommodate content and padding */
     border-radius: 0.5rem;
-    padding: 10px 10px 10px 10px;
+    padding: 10px;
     box-shadow: 2px 2px 10px grey;
-    display: grid;
-    grid-template-rows: 150px 50px repeat(2, 40px);
-    grid-template-columns: repeat(2, 50%);
+    display: grid; /* Keep grid for internal layout of each product card */
+    grid-template-rows: 150px auto repeat(2, 40px); /* Adjusted row heights for better spacing */
+    grid-template-columns: 1fr 40px; /* Adjusted columns for favcon to the right */
     grid-template-areas:
         "image image"
         "name name"
         "price favcon"
         "addCart viewMore";
     gap: 5px;
+    flex-shrink: 0; /* Prevent individual product containers from shrinking */
+
+    /* Animation properties for initial appearance */
+    opacity: 0; /* Start hidden */
+    animation: fadeInSlideUp 0.6s ease-out forwards; /* Apply the animation */
+    /* animation-delay will be set via JavaScript for staggered effect */
 }
-#imgContainer:hover{
+#imgContainer:hover {
     box-shadow: 2px 2px 10px #009245;
 }
-#imgContainer #pImage{
+#imgContainer #pImage {
     grid-area: image;
+    align-self: center; /* Center the image vertically within its grid area */
+    justify-self: center; /* Center the image horizontally within its grid area */
 }
-#imgContainer h3{
+#imgContainer h3 {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -141,134 +180,149 @@ img {
     padding: 5px 0;
     grid-area: name;
 }
-#imgContainer #favCon{
+#imgContainer #favCon {
     width: 20px;
     height: 20px;
     grid-area: favcon;
     justify-self: end;
+    align-self: center; /* Vertically center the icon */
 }
-#imgContainer .price{
+#imgContainer .price {
     font-weight: lighter;
-    padding:0px;
     color: #009245;
     grid-area: price;
+    align-self: center; /* Vertically center the price */
 }
-.buttons{
-    display: grid;
-    grid-template-rows: 30px;
-    grid-template-columns: repeat(7, 120px);
-    gap: 5px;
+.buttons {
+    display: flex; /* Use flexbox for the filter buttons */
+    gap: 5px; /* Space between buttons */
+    padding: 0 10px; /* Add padding to align with products */
+    margin-bottom: 20px; /* Add some space below buttons */
 }
-h3{
-    margin:0%;
+h3 {
+    margin: 0;
     padding-top: 5px;
 }
-img:hover{
+img:hover {
     cursor: pointer;
 }
-.toCart{
+.toCart {
     background-color: black;
     border-radius: 0.5rem;
     color: white;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: normal;
     grid-area: addCart;
+    border: none;
+    cursor: pointer;
 }
-#viewDets{
-    border:1px solid black;
+#viewDets {
+    border: 1px solid black;
     border-radius: 0.5rem;
     color: black;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: normal;
     grid-area: viewMore;
+    background-color: white;
+    cursor: pointer;
 }
-.checkoutBody{
+.checkoutBody {
     display: grid;
     grid-template-rows: auto;
 }
-.checkoutContainer{
+.checkoutContainer {
     height: 100px;
     width: 98%;
     margin-left: 10px;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 100px 2fr 1fr; /* Adjusted columns for better layout */
     grid-template-areas: "photo itemName price";
     box-shadow: 2px 2px 10px grey;
     border-radius: 0.5rem;
-    margin-bottom: 20px; /* Add this for spacing between rows */
+    margin-bottom: 20px;
+    align-items: center; /* Vertically center content */
+    position: relative; /* For positioning delete button */
 }
-.checkoutContainer:hover{
+.checkoutContainer:hover {
     box-shadow: 2px 2px 10px green;
 }
-.checkoutImage{
+.checkoutImage {
     grid-area: photo;
     height: 80px;
     width: 80px;
-    padding-left: 50px;
-    padding-top: 10px;
+    padding-left: 10px; /* Adjusted padding */
 }
-.checkoutTitle{
+.checkoutTitle {
     grid-area: itemName;
-    padding-top: 30px;
-    
+    padding-left: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
-.checkoutPrice{
+.checkoutPrice {
     grid-area: price;
     justify-self: center;
-    padding-top: 30px;
-    color:#009245;
+    color: #009245;
+    padding-right: 10px; /* Add some right padding */
 }
-.itemDelete{
+.itemDelete {
     width: 20px;
     height: 20px;
     border-radius: 50%;
     background-color: black;
     display: flex;
     justify-content: center;
-    grid-area: price;
-    justify-self: end;
-    margin-right: 10px;
-    margin-top: 5px;
+    align-items: center;
+    position: absolute; /* Position absolutely within checkoutContainer */
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+    border: none; /* Remove default button border */
 }
-.itemDelete:hover{
+.itemDelete:hover {
     background-color: green;
 }
-.itemDelete h3{
+.itemDelete h3 {
     color: white;
-    margin: 0%;
-    padding: 0%;
+    margin: 0;
+    padding: 0;
     font-weight: lighter;
-    cursor: pointer; 
+    font-size: 0.8em; /* Smaller font for 'X' */
 }
-.checkoutTotal{
-    display: grid;
-    padding-left: 10px;
+.checkoutTotal {
+    display: flex; /* Use flexbox for total row */
+    justify-content: space-between; /* Push total and figures to opposite ends */
+    padding: 0 20px 0 10px; /* Adjusted padding */
     width: 98%;
-    grid-template-columns: repeat(2,1fr);
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-top: 20px;
 }
-.total{
-    margin-left: 60px;
+.total {
+    margin-left: 0; /* Remove left margin */
 }
-.figures{
+.figures {
     justify-self: end;
-    margin-right: 200px;
     color: #009245;
 }
-.marker{
+.marker {
     background-color: black;
     border-radius: 50%;
     width: 20px;
     height: 20px;
     display: flex;
+    justify-content: center;
+    align-items: center; /* Center the number vertically */
     grid-area: cart;
     justify-self: center;
     margin-top: 15px;
     margin-left: 30px;
+    position: relative; /* For precise positioning if needed */
+    top: -5px; /* Adjust vertical position */
+    left: 5px; /* Adjust horizontal position */
 }
-#markerNum{
+#markerNum {
     font-size: small;
     color: white;
-    justify-self: center;
-    margin-left: 6px;
+    line-height: 1; /* Ensure text is centered without extra line height */
 }
-
