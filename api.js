@@ -17,6 +17,7 @@ fetch('https://fakestoreapi.com/products')
         <button id="toCart">Add to cart</button>
         <button id="viewDets">View details</button>
         </div>`;
+    });
   
     const checkout = document.querySelector('.cart');
     const marker_num = document.querySelector('.marker'); 
