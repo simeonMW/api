@@ -188,7 +188,7 @@ img:hover{
 }
 .checkoutContainer{
     height: 100px;
-    width: 1470px;
+    width: 1200px;
     margin-left: 10px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
