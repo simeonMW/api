@@ -1,0 +1,274 @@
+*{
+    margin:0%;
+}
+.banner img{
+    width: 300px;
+    height: 60px;
+    padding: 10px 10px 10px 10px;
+}
+.banner{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas: "menu logo cart";
+    justify-content:center;
+    margin-bottom: 20px;
+    box-shadow: 2px 2px 10px rgb(66, 64, 64);
+}
+.cart{
+    grid-area: cart;
+    justify-self: center;
+}
+.logo{
+    grid-area: logo;
+}
+.category{
+    background-color: black;
+    margin-left: 10px;
+    border-radius: 0.5rem;
+    height: 40px;
+    color: white;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: normal;
+    font-size: larger;
+}
+.filter-container {
+    position: relative;
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.filter-button {
+    background-color: black;
+    border-radius: 0.5rem;
+    height: 40px;
+    /* --- Adjusted properties for better fit --- */
+    padding: 0 15px; /* Add horizontal padding */
+    font-size: 1rem; /* Explicit font size, often 16px */
+    white-space: nowrap; /* Prevent text from wrapping */
+    /* Removed fixed width to allow content to dictate size */
+    /* --- End of adjustment --- */
+    color: white;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: normal;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px; /* Space between text and icon */
+    cursor: pointer;
+}
+
+.filter-button img{
+    height: 20px; /* Slightly smaller icon */
+    width: 20px;
+    flex-shrink: 0; /* Prevent icon from shrinking on smaller screens */
+}
+
+.filter-dropdown {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 0.5rem;
+    top: 45px;
+    left: 0;
+}
+
+.filter-dropdown button {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    background-color: transparent;
+    border: none;
+    width: 100%;
+    text-align: left;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: large;
+    cursor: pointer;
+}
+
+.filter-dropdown button:hover {
+    background-color: #ddd;
+    border-radius: 0.5rem;
+}
+
+.filter-container.active .filter-dropdown {
+    display: block;
+}
+
+
+#productImage{
+    height: 400px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Create responsive rows */
+    gap: 10px;
+    row-gap: 30px;
+    margin-top: 50px;
+}
+img {
+    width: 150px;
+    height: 150px;
+}
+#imgContainer{
+    width: 170px;
+    align-content: center;
+    border-radius: 0.5rem;
+    padding: 10px 10px 10px 10px;
+    box-shadow: 2px 2px 10px grey;
+    display: grid;
+    grid-template-rows: 150px 50px repeat(2, 40px);
+    grid-template-columns: repeat(2, 50%);
+    grid-template-areas:
+        "image image"
+        "name name"
+        "price favcon"
+        "addCart viewMore";
+    gap: 5px;
+}
+#imgContainer:hover{
+    box-shadow: 2px 2px 10px #009245;
+}
+#imgContainer #pImage{
+    grid-area: image;
+}
+#imgContainer h3{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
+    padding: 5px 0;
+    grid-area: name;
+}
+#imgContainer #favCon{
+    width: 20px;
+    height: 20px;
+    grid-area: favcon;
+    justify-self: end;
+}
+#imgContainer .price{
+    font-weight: lighter;
+    padding:0px;
+    color: #009245;
+    grid-area: price;
+}
+.buttons{
+    display: grid;
+    grid-template-rows: 30px;
+    grid-template-columns: repeat(7, 120px);
+    gap: 5px;
+}
+h3{
+    margin:0%;
+    padding-top: 5px;
+}
+img:hover{
+    cursor: pointer;
+}
+.toCart{
+    background-color: black;
+    border-radius: 0.5rem;
+    color: white;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: normal;
+    grid-area: addCart;
+}
+#viewDets{
+    border:1px solid black;
+    border-radius: 0.5rem;
+    color: black;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: normal;
+    grid-area: viewMore;
+}
+.checkoutBody{
+    display: grid;
+    grid-template-rows: auto;
+}
+.checkoutContainer{
+    height: 100px;
+    width: 1470px;
+    margin-left: 10px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas: "photo itemName price";
+    box-shadow: 2px 2px 10px grey;
+    border-radius: 0.5rem;
+    margin-bottom: 20px; /* Add this for spacing between rows */
+}
+.checkoutContainer:hover{
+    box-shadow: 2px 2px 10px green;
+}
+.checkoutImage{
+    grid-area: photo;
+    height: 80px;
+    width: 80px;
+    padding-left: 50px;
+    padding-top: 10px;
+}
+.checkoutTitle{
+    grid-area: itemName;
+    padding-top: 30px;
+    
+}
+.checkoutPrice{
+    grid-area: price;
+    justify-self: center;
+    padding-top: 30px;
+    color:#009245;
+}
+.itemDelete{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    grid-area: price;
+    justify-self: end;
+    margin-right: 10px;
+    margin-top: 5px;
+}
+.itemDelete:hover{
+    background-color: green;
+}
+.itemDelete h3{
+    color: white;
+    margin: 0%;
+    padding: 0%;
+    font-weight: lighter;
+    cursor: pointer; 
+}
+.checkoutTotal{
+    display: grid;
+    padding-left: 10px;
+    width: 1470px;
+    grid-template-columns: repeat(2,1fr);
+}
+.total{
+    margin-left: 60px;
+}
+.figures{
+    justify-self: end;
+    margin-right: 200px;
+    color: #009245;
+}
+.marker{
+    background-color: black;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    grid-area: cart;
+    justify-self: center;
+    margin-top: 15px;
+    margin-left: 30px;
+}
+#markerNum{
+    font-size: small;
+    color: white;
+    justify-self: center;
+    margin-left: 6px;
+}
+
