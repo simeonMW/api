@@ -126,15 +126,12 @@ body {
 }
 
 #productImage {
-    /* Changed from grid to flexbox for left alignment and close packing */
-    display: flex;
-    flex-wrap: wrap; /* Allow items to wrap to the next line */
-    gap: 10px; /* Space between product containers */
+    height: 400px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Create responsive rows */
+    gap: 10px;
+    row-gap: 30px;
     margin-top: 50px;
-    padding: 0 10px; /* Add some padding to the container itself */
-    height: auto; /* Allow height to adjust based on content */
-    justify-content: flex-start; /* Align items to the start (left) */
-    align-items: flex-start; /* Align items to the top */
 }
 
 img {
