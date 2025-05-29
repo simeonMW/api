@@ -147,7 +147,7 @@ img {
     box-shadow: 2px 2px 10px grey;
     display: grid; /* Keep grid for internal layout of each product card */
     grid-template-rows: 150px auto repeat(2, 40px); /* Adjusted row heights for better spacing */
-    grid-template-columns: 1fr 40px; /* Adjusted columns for favcon to the right */
+    grid-template-columns: repeat(2, 1fr); /* Adjusted columns for favcon to the right */
     grid-template-areas:
         "image image"
         "name name"
