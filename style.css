@@ -213,15 +213,28 @@ img:hover {
     border: none;
     cursor: pointer;
 }
-#viewDets {
-    border: 1px solid black;
-    border-radius: 0.5rem;
+.toCart:hover{
+    background-color: white;
     color: black;
+    border: 1px solid black; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: normal; 
+}
+#viewDets {
+    border-radius: 0.5rem;
+    color: white;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: normal;
     grid-area: viewMore;
-    background-color: white;
+    background-color: black;
     cursor: pointer;
+}
+#viewDets:hover{
+    border: 1px solid black;
+    color: black;
+    background-color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: normal;    
 }
 .checkoutBody {
     display: grid;
