@@ -1,4 +1,5 @@
-
+let categories = ["all"];
+let categoryClick = null; // Declare categoryClick function variable
   // Fetch products from the API
     fetch('https://fakestoreapi.com/products')
         .then(response => response.json())
@@ -22,6 +23,9 @@
                             <button id="viewDets">View details</button>
                         </div>
                     `;
+                    if (categories.includes(product.category)) {} else {
+                        categories.push(product.category);
+                    }
                 });
                 attachAddToCartListeners(); // Re-attach listeners after re-rendering
             }
@@ -141,5 +145,55 @@
 
             // Initial attachment of add to cart listeners
             attachAddToCartListeners();
+
+            //category functionalities
+
+            // ---Category Dropdown Functionality ---
+            const categoryBTN = document.getElementById('categoryBtn');
+            const categoryDropdown = document.getElementById('categoryDropdown');
+            const categoryContainer = document.querySelector('.category-container');
+
+            categoryClick = (event)=> {
+                let _value = event.target.value;
+                let indx = 0;
+                for (let ctg of categories) {
+                    const firstWord = ctg.trim().split(" ")[0];
+                    if (firstWord === _value || ctg === _value) {
+                        indx = categories.indexOf(ctg); 
+                        productImage.innerHTML = "";
+                        break;
+                    }
+                }
+                allProducts.forEach(product => {
+                    if (product.category === categories[indx] || categories[indx] === "all") {
+                        productImage.innerHTML += `
+                            <div id="imgContainer">
+                                <img src=${product.image} alt=${product.description} id="pImage">
+                                <h3>${product.title}</h3>
+                                <h3 class="price">$${product.price.toFixed(2)}</h3>
+                                <img src="Favorite_fill.svg" alt="fav" id="favCon">
+                                <button class="toCart">Add to cart</button>
+                                <button id="viewDets">View details</button>
+                            </div>`;
+                    }
+                });
+                categoryContainer.classList.remove('active');
+            }
+
+            categoryDropdown.innerHTML = " ";
+            categories.forEach((ctgry) => {
+                categoryDropdown.innerHTML += "<input type='button' value=" + ctgry + "  onclick='categoryClick(event)'> ";
+            })
+
+            categoryBTN.addEventListener('click', () => {
+                categoryContainer.classList.toggle('active'); // Toggle the 'active' class
+            });
+
+            document.addEventListener('click', (event) => {
+                if (!categoryContainer.contains(event.target)) {
+                    categoryContainer.classList.remove('active');
+                }
+            });
         })
         .catch(error => console.error('Error fetching products:', error));
+
