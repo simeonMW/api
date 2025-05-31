@@ -177,6 +177,7 @@ let categoryClick = null; // Declare categoryClick function variable
                             </div>`;
                     }
                 });
+                attachAddToCartListeners(); // Re-attach listeners after re-rendering
                 categoryContainer.classList.remove('active');
             }
 
