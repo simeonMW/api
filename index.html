@@ -1,19 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Product Page</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .modal {
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+        }
+
+        .modal-content img {
+            width: 100px;
+            height: auto;
+        }
+
+        .close-btn {
+            position: absolute;
+            right: 15px;
+            top: 10px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+    </style>
 </head>
+
 <body>
-       <header class="banner">
+    <header class="banner">
         <img src="buck worth.png" alt="logo" class="logo">
-         <img src="Basket_alt_3.svg" alt="cart" class="cart">
+        <img src="Basket_alt_3.svg" alt="cart" class="cart">
         <div class="marker">
             <h3 id="markerNum"></h3>
         </div>
     </header>
+
     <section class="buttons">
         <div class="category-container">
             <button class="category-button" id="categoryBtn">Categories</button>
@@ -34,7 +75,21 @@
         </div>
     </section>
 
-    <p id="productImage"></p>
+    <div id="productImage"></div>
+
+    <div id="productModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close-btn" id="closeModal">&times;</span>
+            <img id="modalImage" src="" alt="Product Image">
+            <h2 id="modalTitle"></h2>
+            <p id="modalDescription"></p>
+            <p><strong>Price: $<span id="modalPrice"></span></strong></p>
+        </div>
+    </div>
+
+    <script src="api.js"></script>
+    <script>
+    </script>
 </body>
-<script src="api.js"></script>
+
 </html>

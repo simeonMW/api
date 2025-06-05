@@ -1,200 +1,207 @@
 let categories = ["all"];
-let categoryClick = null; // Declare categoryClick function variable
-  // Fetch products from the API
-    fetch('https://fakestoreapi.com/products')
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
+let categoryClick = null;
 
-            const productImage = document.getElementById('productImage');
-            const allProducts = data; // Store all fetched products
+fetch("https://fakestoreapi.com/products")
+  .then((response) => response.json())
+  .then((data) => {
+    const productImage = document.getElementById("productImage");
+    const modal = document.getElementById("productModal");
+    const modalImage = document.getElementById("modalImage");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalDescription = document.getElementById("modalDescription");
+    const modalPrice = document.getElementById("modalPrice");
+    const closeModal = document.getElementById("closeModal");
 
-            // Function to render products based on a given array
-            function renderProducts(productsToRender) {
-                productImage.innerHTML = ''; // Clear existing products
-                productsToRender.forEach(product => {
-                    productImage.innerHTML += `
-                        <div id="imgContainer">
-                            <img src=${product.image} alt=${product.description} id="pImage">
-                            <h3>${product.title}</h3>
-                            <h3 class="price">$${product.price.toFixed(2)}</h3>
-                            <img src="Favorite_fill.svg" alt="fav" id="favCon">
-                            <button class="toCart">Add to cart</button>
-                            <button id="viewDets">View details</button>
-                        </div>
-                    `;
-                    if (categories.includes(product.category)) {} else {
-                        categories.push(product.category);
-                    }
-                });
-                attachAddToCartListeners(); // Re-attach listeners after re-rendering
-            }
+    const allProducts = data;
 
-            // Initial render of all products
-            renderProducts(allProducts);
-
-            // --- Dropdown Functionality ---
-            const filterBtn = document.getElementById('filterBtn');
-            const filterDropdown = document.getElementById('filterDropdown');
-            const filterContainer = document.querySelector('.filter-container');
-
-            filterBtn.addEventListener('click', () => {
-                filterContainer.classList.toggle('active'); // Toggle the 'active' class
-            });
-
-            // Close the dropdown if a click occurs outside of it
-            document.addEventListener('click', (event) => {
-                if (!filterContainer.contains(event.target)) {
-                    filterContainer.classList.remove('active');
-                }
-            });
-
-            // Handle price range selection
-            filterDropdown.querySelectorAll('button').forEach(button => {
-                button.addEventListener('click', (event) => {
-                    const minPrice = parseFloat(event.target.dataset.filterMin);
-                    const maxPrice = parseFloat(event.target.dataset.filterMax);
-
-                    const filteredProducts = allProducts.filter(product => {
-                        return product.price >= minPrice && product.price <= maxPrice;
-                    });
-
-                    renderProducts(filteredProducts); // Render filtered products
-                    filterContainer.classList.remove('active'); // Close dropdown after selection
-                });
-            });
-
-            // --- Cart Functionality ---
-            const checkout = document.querySelector('.cart');
-            let counter = 0;
-            let checkoutDataB = [];
-            const markerNum = document.getElementById('markerNum');
-
-            function updateCartMarker() {
-                markerNum.innerText = counter;
-            }
-
-            function attachAddToCartListeners() {
-                const toCartButtons = document.querySelectorAll('.toCart');
-                toCartButtons.forEach((btn, idx) => {
-                    // Remove existing listeners to prevent multiple counts on re-renders
-                    btn.removeEventListener('click', handleAddToCart);
-                    btn.addEventListener('click', handleAddToCart);
-                });
-            }
-
-            function handleAddToCart(event) {
-                // Find the parent imgContainer to get product details
-                const imgContainer = event.target.closest('#imgContainer');
-                const productTitle = imgContainer.querySelector('h3').innerText;
-                const productImageSrc = imgContainer.querySelector('#pImage').src;
-                const productPrice = imgContainer.querySelector('.price').innerText.replace('$', '');
-
-                counter++;
-                updateCartMarker();
-
-                checkoutDataB.push({
-                    name: productTitle,
-                    image: productImageSrc,
-                    price: parseFloat(productPrice)
-                });
-                console.log("Added to cart:", checkoutDataB);
-            }
-
-            checkout.addEventListener('click', () => {
-                productImage.innerHTML = ""; // Clear previous content
-
-                // Render all checkout items
-                checkoutDataB.forEach((item, idx) => {
-                    productImage.innerHTML += `
-                        <div class="checkoutContainer" data-index="${idx}">
-                            <button class="itemDelete"><h3>X</h3></button>
-                            <img src="${item.image}" alt="product image" class="checkoutImage">
-                            <h2 class="checkoutTitle">${item.name}</h2>
-                            <h2 class="checkoutPrice">$${item.price.toFixed(2)}</h2>
-                        </div>
-                    `;
-                });
-
-                // Calculate and display total
-                let total = checkoutDataB.reduce((sum, item) => sum + Number(item.price), 0);
-                productImage.innerHTML += `
-                    <div class="checkoutTotal" style="margin-top:20px; font-weight:bold; font-size:1.2em;">
-                        <h2 class="total">Total:</h2>
-                        <h2 class="figures">$${total.toFixed(2)}</h2>
+    function renderProducts(productsToRender) {
+      productImage.innerHTML = "";
+      productsToRender.forEach((product) => {
+        productImage.innerHTML += `
+                    <div id="imgContainer" data-id="${product.id}">
+                        <img src="${product.image}" alt="${
+          product.description
+        }" id="pImage">
+                        <h3>${product.title}</h3>
+                        <h3 class="price">$${product.price.toFixed(2)}</h3>
+                        <img src="Favorite_fill.svg" alt="fav" id="favCon">
+                        <button class="toCart">Add to cart</button>
+                        <button class="viewDets" id="viewDets">View details</button>
                     </div>
                 `;
+        if (!categories.includes(product.category)) {
+          categories.push(product.category);
+        }
+      });
 
-                productImage.style.cssText = 'height: 400px; display: block;';
+      attachAddToCartListeners();
+      attachViewDetailsListeners(productsToRender);
+    }
 
-                // Add event listeners to all delete buttons
-                document.querySelectorAll('.itemDelete').forEach((btn, idx) => {
-                    btn.addEventListener('click', () => {
-                        // Remove the item from checkoutDataB
-                        checkoutDataB.splice(idx, 1);
+    renderProducts(allProducts);
 
-                        // Decrement the counter and update markerNum
-                        counter = Math.max(0, counter - 1); // Prevent negative values
-                        updateCartMarker();
+    // Cart logic
+    const checkout = document.querySelector(".cart");
+    let counter = 0;
+    let checkoutDataB = [];
+    const markerNum = document.getElementById("markerNum");
 
-                        // Re-render the checkout items
-                        checkout.click(); // Simulate a click on the cart to re-render
-                    });
-                });
-            });
+    function updateCartMarker() {
+      markerNum.innerText = counter;
+    }
 
-            // Initial attachment of add to cart listeners
-            attachAddToCartListeners();
+    function attachAddToCartListeners() {
+      const toCartButtons = document.querySelectorAll(".toCart");
+      toCartButtons.forEach((btn) => {
+        btn.onclick = (event) => {
+          const container = event.target.closest("#imgContainer");
+          const title = container.querySelector("h3").innerText;
+          const image = container.querySelector("#pImage").src;
+          const price = container
+            .querySelector(".price")
+            .innerText.replace("$", "");
+          counter++;
+          updateCartMarker();
+          checkoutDataB.push({
+            name: title,
+            image,
+            price: parseFloat(price),
+          });
+          console.log("Added to cart:", checkoutDataB);
+        };
+      });
+    }
 
-            //category functionalities
+    checkout.addEventListener("click", () => {
+      productImage.innerHTML = "";
+      checkoutDataB.forEach((item, idx) => {
+        productImage.innerHTML += `
+                    <div class="checkoutContainer" data-index="${idx}">
+                        <button class="itemDelete"><h3>X</h3></button>
+                        <img src="${
+                          item.image
+                        }" alt="product image" class="checkoutImage">
+                        <h2 class="checkoutTitle">${item.name}</h2>
+                        <h2 class="checkoutPrice">$${item.price.toFixed(2)}</h2>
+                    </div>
+                `;
+      });
 
-            // ---Category Dropdown Functionality ---
-            const categoryBTN = document.getElementById('categoryBtn');
-            const categoryDropdown = document.getElementById('categoryDropdown');
-            const categoryContainer = document.querySelector('.category-container');
+      let total = checkoutDataB.reduce(
+        (sum, item) => sum + Number(item.price),
+        0
+      );
+      productImage.innerHTML += `
+                <div class="checkoutTotal" style="margin-top:20px; font-weight:bold; font-size:1.2em;">
+                    <h2 class="total">Total:</h2>
+                    <h2 class="figures">$${total.toFixed(2)}</h2>
+                </div>
+            `;
 
-            categoryClick = (event)=> {
-                let _value = event.target.value;
-                let indx = 0;
-                for (let ctg of categories) {
-                    const firstWord = ctg.trim().split(" ")[0];
-                    if (firstWord === _value || ctg === _value) {
-                        indx = categories.indexOf(ctg); 
-                        productImage.innerHTML = "";
-                        break;
-                    }
-                }
-                allProducts.forEach(product => {
-                    if (product.category === categories[indx] || categories[indx] === "all") {
-                        productImage.innerHTML += `
-                            <div id="imgContainer">
-                                <img src=${product.image} alt=${product.description} id="pImage">
-                                <h3>${product.title}</h3>
-                                <h3 class="price">$${product.price.toFixed(2)}</h3>
-                                <img src="Favorite_fill.svg" alt="fav" id="favCon">
-                                <button class="toCart">Add to cart</button>
-                                <button id="viewDets">View details</button>
-                            </div>`;
-                    }
-                });
-                attachAddToCartListeners(); // Re-attach listeners after re-rendering
-                categoryContainer.classList.remove('active');
-            }
+      productImage.style.cssText = "height: 400px; display: block;";
 
-            categoryDropdown.innerHTML = " ";
-            categories.forEach((ctgry) => {
-                categoryDropdown.innerHTML += "<input type='button' value=" + ctgry + "  onclick='categoryClick(event)'> ";
-            })
+      document.querySelectorAll(".itemDelete").forEach((btn, idx) => {
+        btn.addEventListener("click", () => {
+          checkoutDataB.splice(idx, 1);
+          counter = Math.max(0, counter - 1);
+          updateCartMarker();
+          checkout.click(); // Refresh checkout view
+        });
+      });
+    });
 
-            categoryBTN.addEventListener('click', () => {
-                categoryContainer.classList.toggle('active'); // Toggle the 'active' class
-            });
+    // View Details functionality
+    function attachViewDetailsListeners(productsList) {
+      document.querySelectorAll(".viewDets").forEach((btn, idx) => {
+        btn.onclick = (event) => {
+          const container = event.target.closest("#imgContainer");
+          const productId = container.dataset.id;
+          const product = productsList.find((p) => p.id == productId);
+          if (product) {
+            modalImage.src = product.image;
+            modalTitle.textContent = product.title;
+            modalDescription.textContent = product.description;
+            modalPrice.textContent = product.price.toFixed(2);
+            modal.style.display = "flex";
+          }
+        };
+      });
+    }
 
-            document.addEventListener('click', (event) => {
-                if (!categoryContainer.contains(event.target)) {
-                    categoryContainer.classList.remove('active');
-                }
-            });
-        })
-        .catch(error => console.error('Error fetching products:', error));
+    closeModal.onclick = () => {
+      modal.style.display = "none";
+    };
 
+    window.onclick = (event) => {
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    };
+
+    // Filter dropdown logic
+    const filterBtn = document.getElementById("filterBtn");
+    const filterDropdown = document.getElementById("filterDropdown");
+    const filterContainer = document.querySelector(".filter-container");
+
+    filterBtn.addEventListener("click", () => {
+      filterContainer.classList.toggle("active");
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!filterContainer.contains(event.target)) {
+        filterContainer.classList.remove("active");
+      }
+    });
+
+    filterDropdown.querySelectorAll("button").forEach((button) => {
+      button.addEventListener("click", (event) => {
+        const min = parseFloat(event.target.dataset.filterMin);
+        const max = parseFloat(event.target.dataset.filterMax);
+        const filtered = allProducts.filter(
+          (p) => p.price >= min && p.price <= max
+        );
+        renderProducts(filtered);
+        filterContainer.classList.remove("active");
+      });
+    });
+
+    // Category dropdown logic
+    const categoryBTN = document.getElementById("categoryBtn");
+    const categoryDropdown = document.getElementById("categoryDropdown");
+    const categoryContainer = document.querySelector(".category-container");
+
+    categoryClick = (event) => {
+      let _value = event.target.value;
+      let indx = 0;
+      for (let ctg of categories) {
+        const firstWord = ctg.trim().split(" ")[0];
+        if (firstWord === _value || ctg === _value) {
+          indx = categories.indexOf(ctg);
+          break;
+        }
+      }
+
+      const filtered = allProducts.filter(
+        (product) =>
+          product.category === categories[indx] || categories[indx] === "all"
+      );
+      renderProducts(filtered);
+      categoryContainer.classList.remove("active");
+    };
+
+    categoryDropdown.innerHTML = "";
+    categories.forEach((ctgry) => {
+      categoryDropdown.innerHTML += `<input type='button' value="${ctgry}" onclick='categoryClick(event)'>`;
+    });
+
+    categoryBTN.addEventListener("click", () => {
+      categoryContainer.classList.toggle("active");
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!categoryContainer.contains(event.target)) {
+        categoryContainer.classList.remove("active");
+      }
+    });
+  })
+  .catch((error) => console.error("Error fetching products:", error));
